@@ -1,0 +1,116 @@
+/* Reset dasar */
+body,
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  background-color: #f0f2f5;
+  color: #1c1e21;
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 960px;
+  margin: 20px auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* Agar navbar tidak tumpah */
+}
+
+/* --- Styling Navbar --- */
+nav {
+  background-color: #004a99;
+  border-bottom: 3px solid #007bff;
+  padding: 0 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex; /* Membuat link jadi horizontal */
+}
+
+nav ul li a {
+  display: block;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #005bc5;
+}
+
+/* Kelas 'active' untuk link yang sedang aktif */
+nav ul li a.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* --- Styling Konten Halaman --- */
+.content {
+  padding: 20px 30px 30px 30px;
+}
+
+h1 {
+  color: #004a99;
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f2f5;
+}
+
+h3 {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+/* Kontainer untuk setiap soal */
+.soal-container {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+label {
+  font-weight: bold;
+  color: #555;
+}
+
+/* Styling untuk list di soal array */
+.soal-container ol {
+  padding-left: 20px; /* Atur indentasi list */
+}
+
+.soal-container li {
+  margin-bottom: 5px;
+}
+
+/* Styling untuk output print_r */
+pre {
+  background-color: #282c34;
+  color: #abb2bf;
+  padding: 15px;
+  border-radius: 5px;
+  overflow-x: auto; /* Scroll jika terlalu panjang */
+  font-family: "Courier New", Courier, monospace;
+}

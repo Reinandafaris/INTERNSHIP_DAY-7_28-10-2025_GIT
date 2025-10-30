@@ -12,6 +12,7 @@ header h1 {
   text-align: center;
 }
 
+/* styling container */
 .container {
   max-width: 550px;
   margin: 20px auto 0;

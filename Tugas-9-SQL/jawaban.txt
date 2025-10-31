@@ -1,0 +1,96 @@
+-- Kita membuka XAMPP Shell dan masuk ke MariaDB monitor sebagai user 'root'
+mysql -u root
+
+-- Setelah masuk, prompt berubah menjadi 'MariaDB [(none)]>' --
+-- Sekarang kita bisa memberi perintah SQL. --
+
+-- Soal 1: Membuat database baru
+CREATE DATABASE myshop;
+
+-- Memilih database 'myshop' untuk mulai bekerja
+USE myshop;
+
+-- Soal 2: Membuat tabel 'users' untuk menyimpan data pengguna
+CREATE TABLE users (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255)
+);
+
+-- Membuat tabel 'categories' untuk menyimpan jenis-jenis item
+CREATE TABLE categories (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+-- Membuat tabel 'items' dan menghubungkannya ke 'categories' dengan FOREIGN KEY
+CREATE TABLE items (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    description VARCHAR(255),
+    price INTEGER,
+    stock INTEGER,
+    category_id INTEGER,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+-- Pengecekan: Melihat apakah semua tabel sudah berhasil dibuat
+SHOW TABLES;
+
+-- Pengecekan: Melihat struktur atau "kolom" dari setiap tabel
+DESC items;
+DESC categories;
+DESC users;
+
+-- Soal 3: Memasukkan data ke dalam tabel 'users'
+INSERT INTO users (name, email, password) VALUES
+('John Doe', 'john@doe.com', 'john123'),
+('Jane Doe', 'jane@doe.com', 'jenita123');
+
+-- Memasukkan data ke dalam tabel 'categories'
+INSERT INTO categories (name) VALUES
+('gadget'),
+('cloth'),
+('men'),
+('women'),
+('branded');
+
+-- Memasukkan data ke dalam tabel 'items'
+INSERT INTO items (name, description, price, stock, category_id) VALUES
+('Sumsang b50', 'hape keren dari merek sumsang', 4000000, 100, 1),
+('Uniklooh', 'baju keren dari brand ternama', 500000, 50, 2),
+('IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 10, 1);
+
+-- Pengecekan: Melihat isi data di setiap tabel
+SELECT * FROM users;
+SELECT * FROM items;
+SELECT * FROM categories;
+
+-- Soal 4a: Mengambil data users (tanpa password)
+SELECT id, name, email FROM users;
+
+-- Soal 4b (Bagian 1): Mengambil data items yang harganya di atas 1 juta
+SELECT * FROM items WHERE price > 1000000;
+
+-- Soal 4b (Bagian 2): Mengambil data items yang namanya mengandung kata 'sang'
+SELECT * FROM items WHERE name LIKE '%sang%';
+
+-- Soal 4c: Menampilkan data items digabung (JOIN) dengan nama kategorinya
+SELECT
+    items.name,
+    items.description,
+    items.price,
+    items.stock,
+    items.category_id,
+    categories.name AS kategori
+FROM
+    items
+JOIN
+    categories ON items.category_id = categories.id;
+
+-- Soal 5: Mengubah harga 'Sumsang b50'
+UPDATE items SET price = 2500000 WHERE name = 'Sumsang b50';
+
+-- Pengecekan terakhir: Melihat data 'items' untuk memastikan harga sudah berubah
+SELECT * FROM items;

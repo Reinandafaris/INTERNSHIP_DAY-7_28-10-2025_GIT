@@ -51,18 +51,45 @@
                     {{ $question->answers->count() }} Jawaban
                 </h3>
 
+                @if (session('success'))
+                    <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <div class="space-y-4">
                     @forelse ($question->answers as $answer)
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <div class="text-sm text-gray-600 mb-2">
-                                    Dijawab oleh: <strong>{{ $answer->user->name }}</strong>
-                                    ({{ $answer->created_at->diffForHumans() }})
+                                <div class="flex justify-between items-start">
+                                    <div class="text-sm text-gray-600 mb-2">
+                                        Dijawab oleh: <strong>{{ $answer->user->name }}</strong>
+                                        ({{ $answer->created_at->diffForHumans() }})
+                                    </div>
+
+                                    @canany(['update', 'delete'], $answer)
+                                        <div classs="flex-shrink-0 ml-4">
+                                            @can('update', $answer)
+                                                <a href="{{ route('answers.edit', $answer) }}"
+                                                    class="text-sm text-yellow-600 hover:text-yellow-800">Edit</a>
+                                            @endcan
+                                            @can('delete', $answer)
+                                                <form action="{{ route('answers.destroy', $answer) }}" method="POST"
+                                                    class="inline ml-2"
+                                                    onsubmit="return confirm('Anda yakin ingin menghapus jawaban ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="text-sm text-red-600 hover:text-red-800">Hapus</button>
+                                                </form>
+                                            @endcan
+                                        </div>
+                                    @endcanany
                                 </div>
+
                                 <div class="prose max-w-none text-gray-700">
                                     {!! nl2br(e($answer->content)) !!}
                                 </div>
-
                             </div>
                         </div>
                     @empty
@@ -81,7 +108,31 @@
                         Tulis Jawaban Anda
                     </h3>
 
-                    <p class="text-gray-500">Form untuk menjawab akan ada di sini.</p>
+                    @if ($errors->any())
+                        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('answers.store', $question) }}" method="POST">
+                        @csrf
+                        <div>
+                            <label for="content_answer" class="sr-only">Isi Jawaban</label>
+                            <textarea name="content" id="content_answer" rows="5"
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300" placeholder="Tulis jawaban Anda di sini..." required>{{ old('content') }}</textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-4">
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+                                Kirim Jawaban
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 

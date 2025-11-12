@@ -16,6 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('questions.index')" :active="request()->routeIs('questions.*')">
+                        {{ __('Forum') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('Kategori') }}
                     </x-nav-link>

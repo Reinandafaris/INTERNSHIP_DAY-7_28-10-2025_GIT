@@ -45,8 +45,7 @@
                                             class="text-indigo-600 hover:text-indigo-900">Edit</a>
 
                                         <form action="{{ route('categories.destroy', $category) }}" method="POST"
-                                            class="inline"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
+                                            class="inline form-hapus">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"

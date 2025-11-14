@@ -46,8 +46,7 @@
                                         @endcan
                                         @can('delete', $question)
                                             <form action="{{ route('questions.destroy', $question) }}" method="POST"
-                                                class="inline ml-2"
-                                                onsubmit="return confirm('Anda yakin ingin menghapus pertanyaan ini?');">
+                                                class="inline ml-2 form-hapus">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"

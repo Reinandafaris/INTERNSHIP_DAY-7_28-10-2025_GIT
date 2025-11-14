@@ -22,7 +22,7 @@ class AnswerController extends Controller
         // 2. Buat jawaban
         $question->answers()->create([
             'user_id' => Auth::id(),
-            'content' => $request->content,
+            'content' => clean($request->content),
         ]);
 
         // 3. Redirect kembali ke halaman pertanyaan
@@ -57,7 +57,7 @@ class AnswerController extends Controller
 
         // 3. Update jawaban
         $answer->update([
-            'content' => $request->content,
+            'content' => clean($request->content),
         ]);
 
         // 4. Redirect kembali ke halaman pertanyaan (question.show)

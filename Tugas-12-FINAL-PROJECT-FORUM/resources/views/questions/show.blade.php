@@ -1,4 +1,7 @@
 <x-app-layout>
+    <script src="https://cdn.tiny.cloud/1/hntkvjmwql6cm7ylsjn1nft5s0118rxyzvfm9rg7zaorfzn3/tinymce/8/tinymce.min.js"
+        referrerpolicy="origin" crossorigin="anonymous"></script>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $question->title }}
@@ -33,8 +36,8 @@
                                     class="text-sm text-yellow-600 hover:text-yellow-800">Edit Pertanyaan</a>
                             @endcan
                             @can('delete', $question)
-                                <form action="{{ route('questions.destroy', $question) }}" method="POST" class="inline ml-2"
-                                    onsubmit="return confirm('Anda yakin ingin menghapus pertanyaan ini?');">
+                                <form action="{{ route('questions.destroy', $question) }}" method="POST"
+                                    class="inline ml-2 form-hapus">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-sm text-red-600 hover:text-red-800">Hapus
@@ -75,8 +78,7 @@
                                             @endcan
                                             @can('delete', $answer)
                                                 <form action="{{ route('answers.destroy', $answer) }}" method="POST"
-                                                    class="inline ml-2"
-                                                    onsubmit="return confirm('Anda yakin ingin menghapus jawaban ini?');">
+                                                    class="inline ml-2 form-hapus">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
@@ -123,7 +125,8 @@
                         <div>
                             <label for="content_answer" class="sr-only">Isi Jawaban</label>
                             <textarea name="content" id="content_answer" rows="5"
-                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300" placeholder="Tulis jawaban Anda di sini..." required>{{ old('content') }}</textarea>
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 tinymce-editor"
+                                placeholder="Tulis jawaban Anda di sini..." required>{{ old('content') }}</textarea>
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
@@ -138,4 +141,13 @@
 
         </div>
     </div>
+
+    <script>
+        tinymce.init({
+            selector: '#content_answer',
+            plugins: 'lists link image table code',
+            toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | table | code',
+            height: 350
+        });
+    </script>
 </x-app-layout>

@@ -1,4 +1,7 @@
 <x-app-layout>
+    <script src="https://cdn.tiny.cloud/1/hntkvjmwql6cm7ylsjn1nft5s0118rxyzvfm9rg7zaorfzn3/tinymce/8/tinymce.min.js"
+        referrerpolicy="origin" crossorigin="anonymous"></script>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Buat Pertanyaan Baru') }}
@@ -47,7 +50,8 @@
 
                         <div class="mt-4">
                             <label for="content" class="block font-medium text-sm text-gray-700">Isi Pertanyaan</label>
-                            <textarea name="content" id="content" rows="6" class="block mt-1 w-full rounded-md shadow-sm border-gray-300">{{ old('content') }}</textarea>
+                            <textarea name="content" id="content" rows="6"
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 tinymce-editor">{{ old('content') }}</textarea>
                         </div>
 
                         <div class="mt-4">
@@ -73,4 +77,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        tinymce.init({
+            selector: '#content',
+            plugins: 'lists link image table code',
+            toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | table | code',
+            height: 350
+        });
+    </script>
 </x-app-layout>

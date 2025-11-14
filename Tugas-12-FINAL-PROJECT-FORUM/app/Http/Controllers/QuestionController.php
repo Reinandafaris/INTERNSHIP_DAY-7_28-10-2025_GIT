@@ -61,7 +61,7 @@ class QuestionController extends Controller
             'user_id' => Auth::id(), // Ambil ID user yang sedang login
             'category_id' => $request->category_id,
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => clean($request->content),
             'image' => $imagePath,
         ]);
 
@@ -126,7 +126,7 @@ class QuestionController extends Controller
         $question->update([
             'category_id' => $request->category_id,
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => clean($request->content),
             'image' => $imagePath,
         ]);
 
